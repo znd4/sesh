@@ -11,6 +11,7 @@ type (
 		Icons        bool
 		Json         bool
 		Tmux         bool
+		Swap         bool
 		Zoxide       bool
 		Tmuxinator   bool
 	}
@@ -49,6 +50,10 @@ func (l *RealLister) List(opts ListOptions) (model.SeshSessions, error) {
 		for _, i := range sessions.OrderedIndex {
 			fullDirectory[i] = sessions.Directory[i]
 		}
+	}
+
+	if opts.Swap && len(fullOrderedIndex) > 1 {
+		fullOrderedIndex[0], fullOrderedIndex[1] = fullOrderedIndex[1], fullOrderedIndex[0]
 	}
 
 	return model.SeshSessions{

@@ -33,6 +33,11 @@ func List(icon icon.Icon, json json.Json, list lister.Lister) *cli.Command {
 				Usage:   "show tmux sessions",
 			},
 			&cli.BoolFlag{
+				Name:    "swap",
+				Aliases: []string{"s"},
+				Usage:   "swap the order of the first two results. Useful for swapping between two sessions.",
+			},
+			&cli.BoolFlag{
 				Name:    "zoxide",
 				Aliases: []string{"z"},
 				Usage:   "show zoxide results",
@@ -56,6 +61,7 @@ func List(icon icon.Icon, json json.Json, list lister.Lister) *cli.Command {
 		Action: func(cCtx *cli.Context) error {
 			sessions, err := list.List(lister.ListOptions{
 				Config:       cCtx.Bool("config"),
+				Swap:         cCtx.Bool("swap"),
 				HideAttached: cCtx.Bool("hide-attached"),
 				Icons:        cCtx.Bool("icons"),
 				Json:         cCtx.Bool("json"),
